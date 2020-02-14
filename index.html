@@ -3,39 +3,42 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="style.css">
-  
-  <title>Pomodoro Clock</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css">  
+  <title>Arpi's Tomate Clocko</title>
 </head>
 <body>
     <section id="main">
+      <!-- <audio id="beep"> -->
       <h1>Pomodoro Clock</h1>
       <div id="settings">
-        <div id="break-length">
-          <h2>Break length</h2>
-          <button id="break-length-down">Le</button>
-          <span id="break-length-num">05</span>
-          <button id="break-length-up">Fel</button>
+        <div id="break">
+          <h2 id="break-label">Break length</h2>
+          <button id="break-decrement"><i class="fas fa-arrow-down"></i></button>
+          <span id="break-length">5</span>
+          <button id="break-increment"><i class="fas fa-arrow-up"></i></button>
         </div>
-        <div id="session-length">
-          <h2>Session length</h2>
-          <button id="session-length-down">Le</button>
-          <span id="session-length-num">25</span>
-          <button id="session-length-up">Fel</button>
+        <div id="session">
+          <h2 id="session-label">Session length</h2>
+          <button id="session-decrement"><i class="fas fa-arrow-down"></i></button>
+          <span id="session-length">25</span>
+          <button id="session-increment"><i class="fas fa-arrow-up"></i></button>
         </div>
       </div>
       <div id="clock">
-        <h3 id="session-break">Session</h3>
-        <p><span id="min">25</span>:<span id="sec">00</span></p>
+        <h2 id="timer-label">Session</h2>
+        <p id="time-left"><span id="min">25</span>:<span id="sec">00</span></p>
       </div>
       <div id="controls">
-        <button id="play-pause">play/pause</button>
-        <button id="restart">restart</button>
-
+        <button id="start_stop"><i class="fas fa-play"></i>
+          <i class="fas fa-pause"></i></button>
+          <button id="reset"><i class="fas fa-sync-alt"></i></button>
       </div>
+    
 
 
     </section>
   
 </body>
 <script src="script.js"></script>
+<script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
 </html>

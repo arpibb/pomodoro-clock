@@ -1,18 +1,22 @@
-const breakDown = document.getElementById('break-length-down')
-const breakUp = document.getElementById('break-length-up')
-const breakNum = document.getElementById('break-length-num')
+const breakDown = document.getElementById('break-decrement')
+const breakUp = document.getElementById('break-increment')
+const breakNum = document.getElementById('break-length')
+console.log(breakDown)
 
-const sessionDown = document.getElementById('session-length-down')
-const sessionNum = document.getElementById('session-length-num')
-const sessionUp = document.getElementById('session-length-up')
+const sessionDown = document.getElementById('session-decrement')
+const sessionNum = document.getElementById('session-length')
+const sessionUp = document.getElementById('session-increment')
 
 const min = document.getElementById('min')
 const sec = document.getElementById('sec')
 
-const playPauseButton = document.getElementById('play-pause')
-const restartButton = document.getElementById('restart')
+const playPauseButton = document.getElementById('start_stop')
+const restartButton = document.getElementById('reset')
+console.log(playPauseButton)
 
-const sessionOrBreakTitle = document.querySelector('#session-break') 
+const sessionOrBreakTitle = document.querySelector('#timer-label')
+
+console.log(sessionNum)
 
 let isTicking = false
 let isBreak = false
@@ -21,7 +25,7 @@ let interval
 
 function setBreakDuration(){
   if(!isTicking){
-    if(this.id==="break-length-down"){
+    if(this.id==="break-decrement"){
       if(parseInt(breakNum.innerHTML)>1){
         if(isBreak){
           if(min.innerHTML !== breakNum.innerHTML){
@@ -34,27 +38,19 @@ function setBreakDuration(){
             breakNum.innerHTML = parseInt(breakNum.innerHTML) - 1
           }
           if(parseInt(breakNum.innerHTML) < 10 && parseInt(breakNum.innerHTML) > 1){
-            breakNum.innerHTML = "0" + breakNum.innerHTML
             min.innerHTML = "0" + min.innerHTML
           }
           if(parseInt(breakNum.innerHTML)=== 1){
-            breakNum.innerHTML = "01"
             min.innerHTML = "01"
           }
         }
         else if(isSession){
           breakNum.innerHTML = parseInt(breakNum.innerHTML) - 1
-          if(parseInt(breakNum.innerHTML) < 10 && parseInt(breakNum.innerHTML) > 1){
-            breakNum.innerHTML = "0" + breakNum.innerHTML
-          }
-          if(parseInt(breakNum.innerHTML)=== 1){
-            breakNum.innerHTML = "01"
-          }
         }
       }
     }
-    else{
-      if(isBreak){
+    else {
+      if(isBreak && parseInt(breakNum.innerHTML)<60){
         if(min.innerHTML !== breakNum.innerHTML){
           breakNum.innerHTML = parseInt(breakNum.innerHTML) + 1
           min.innerHTML = breakNum.innerHTML
@@ -65,15 +61,11 @@ function setBreakDuration(){
           breakNum.innerHTML = parseInt(breakNum.innerHTML) + 1
         }
         if(parseInt(breakNum.innerHTML) < 10 && parseInt(breakNum.innerHTML) > 1){
-          breakNum.innerHTML = "0" + breakNum.innerHTML
           min.innerHTML = "0" + min.innerHTML
         }
       }
-      else if(isSession){
+      else if(isSession && parseInt(breakNum.innerHTML)<60){
         breakNum.innerHTML = parseInt(breakNum.innerHTML) + 1
-        if(parseInt(breakNum.innerHTML) < 10 && parseInt(breakNum.innerHTML) > 1){
-          breakNum.innerHTML = "0" + breakNum.innerHTML
-        }
       }
     }
   }
@@ -81,7 +73,7 @@ function setBreakDuration(){
 
 function setSessionDuration(e){
   if(!isTicking){
-    if(this.id==="session-length-down"){
+    if(this.id==="session-decrement"){
       if(parseInt(sessionNum.innerHTML)>1){
         if(isSession){
           if(min.innerHTML !== sessionNum.innerHTML){
@@ -94,27 +86,19 @@ function setSessionDuration(e){
             sessionNum.innerHTML = parseInt(sessionNum.innerHTML) - 1
           }
           if(parseInt(sessionNum.innerHTML) < 10 && parseInt(sessionNum.innerHTML) > 1){
-            sessionNum.innerHTML = "0" + sessionNum.innerHTML
             min.innerHTML = "0" + min.innerHTML
           }
           if(parseInt(sessionNum.innerHTML)=== 1){
-            sessionNum.innerHTML = "01"
             min.innerHTML = "01"
           }
         }
         else if(isBreak){
           sessionNum.innerHTML = parseInt(sessionNum.innerHTML) - 1
-          if(parseInt(sessionNum.innerHTML) < 10 && parseInt(sessionNum.innerHTML) > 1){
-            sessionNum.innerHTML = "0" + sessionNum.innerHTML
-          }
-          if(parseInt(sessionNum.innerHTML)=== 1){
-            sessionNum.innerHTML = "01"
-          }
         }
       }
     }
-    else{
-      if(isSession){
+    else {
+      if(isSession && parseInt(sessionNum.innerHTML)<60){
         if(min.innerHTML !== sessionNum.innerHTML){
           sessionNum.innerHTML = parseInt(sessionNum.innerHTML) + 1
           min.innerHTML = sessionNum.innerHTML
@@ -125,15 +109,11 @@ function setSessionDuration(e){
           sessionNum.innerHTML = parseInt(sessionNum.innerHTML) + 1
         }
         if(parseInt(sessionNum.innerHTML) < 10 && parseInt(sessionNum.innerHTML) > 1){
-          sessionNum.innerHTML = "0" + sessionNum.innerHTML
           min.innerHTML = "0" + min.innerHTML
         }
       }
-      else if(isBreak){
+      else if(isBreak && parseInt(sessionNum.innerHTML)<60){
         sessionNum.innerHTML = parseInt(sessionNum.innerHTML) + 1
-        if(parseInt(sessionNum.innerHTML) < 10 && parseInt(sessionNum.innerHTML) > 1){
-          sessionNum.innerHTML = "0" + sessionNum.innerHTML
-        }
       }
     }
   }
@@ -144,28 +124,34 @@ function playPause(){
   if(isTicking){
     interval = setInterval(function(){
       if(parseInt(sec.innerHTML) === 0 && parseInt(min.innerHTML) !== 0){
+        console.log("param")
         sec.innerHTML = 60
         min.innerHTML = parseInt(min.innerHTML) - 1
         if(parseInt(min.innerHTML)<10){
           min.innerHTML = "0" + min.innerHTML
         }
       }
-      sec.innerHTML = parseInt(sec.innerHTML) - 5
+      sec.innerHTML = parseInt(sec.innerHTML) - 10
       if(parseInt(sec.innerHTML)<10){
         sec.innerHTML = "0" + sec.innerHTML
       }
       if(parseInt(sec.innerHTML) === 0 && parseInt(min.innerHTML) === 0){
+        sec.innerHTML = "00"
+        min.innerHTML = "00"
+      }
+      if(parseInt(sec.innerHTML) < 0 && parseInt(min.innerHTML) === 0){
         isBreak = !isBreak
         isSession = !isSession
         if(isBreak){
           sessionOrBreakTitle.innerHTML = "Break"
-          min.innerHTML = breakNum.innerHTML
+          parseInt(breakNum.innerHTML) < 10 ? min.innerHTML = "0" + breakNum.innerHTML : min.innerHTML = breakNum.innerHTML 
         }
         else{
           sessionOrBreakTitle.innerHTML = "Session"
-          min.innerHTML = sessionNum.innerHTML
+          parseInt(sessionNum.innerHTML) < 10 ? min.innerHTML = "0" + sessionNum.innerHTML : min.innerHTML = sessionNum.innerHTML 
         }
       }
+      
     }, 1000);
   }
   else{
@@ -180,8 +166,8 @@ function restart(){
     isBreak = false
     clearInterval(interval)
     sessionNum.innerHTML= "25"
-    breakNum.innerHTML = "05"
-    min.innerHTML = sessionNum.innerHTML
+    breakNum.innerHTML = "5"
+    min.innerHTML = "25"
     sec.innerHTML = "00"
   }
   else{
@@ -189,8 +175,8 @@ function restart(){
     isBreak = false
     clearInterval(interval)
     sessionNum.innerHTML= "25"
-    breakNum.innerHTML = "05"
-    min.innerHTML = sessionNum.innerHTML
+    breakNum.innerHTML = "5"
+    min.innerHTML = "25"
     sec.innerHTML = "00"
   }
 }
