@@ -1,23 +1,46 @@
+@font-face {
+  font-family: "Digital";
+  src: url("fonts/DS-DIGI.TTF") format("truetype");
+}
+:root{
+  --font-for-texts: 'Montserrat', sans-serif; 
+}
+
+
 #main{
   margin:200px;
   text-align: center;
 }
+h1 {
+  font-family: var(--font-for-texts);
+  font-size: 35px;
+}
 #settings{
+  width: 700px;
+  margin: 0 350px 0 300px;
   display: flex;
   justify-content: center;
   /* margin-bottom: 30px; */
 }
 #break{
-  margin-right: 30px;
+  margin-right: 45px;
+  font-family: var(--font-for-texts);
 }
 #session{
-  margin-left: 30px;;
+  margin: 0px 30px;
+  margin-left: 30px;
+  font-family: var(--font-for-texts);
 }
 #clock{
-  width: 200px;
+  width: 250px;
   margin: 20px auto;
+  padding: 0px;
   border: 3px solid black;
-  border-radius: 15px;
+  border-radius: 45px;
+}
+#timer-label{
+  font-size: 30px;
+  font-family: var(--font-for-texts);
 }
 button{
   border: none;
@@ -30,5 +53,11 @@ button:focus{
 }
 #controls button:clicked{
   border: none;
+}
+#time-left{
+  font-family: Digital;
+  font-size: 60px;
+  margin-bottom: 30px;
+  margin-block-start: 0;
 }
 
