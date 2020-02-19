@@ -1,7 +1,6 @@
 const breakDown = document.getElementById('break-decrement')
 const breakUp = document.getElementById('break-increment')
 const breakNum = document.getElementById('break-length')
-console.log(breakDown)
 
 const sessionDown = document.getElementById('session-decrement')
 const sessionNum = document.getElementById('session-length')
@@ -12,11 +11,8 @@ const sec = document.getElementById('sec')
 
 const playPauseButton = document.getElementById('start_stop')
 const restartButton = document.getElementById('reset')
-console.log(playPauseButton)
 
 const sessionOrBreakTitle = document.querySelector('#timer-label')
-
-console.log(sessionNum)
 
 let isTicking = false
 let isBreak = false
@@ -71,7 +67,7 @@ function setBreakDuration(){
   }
 }
 
-function setSessionDuration(e){
+function setSessionDuration(){
   if(!isTicking){
     if(this.id==="session-decrement"){
       if(parseInt(sessionNum.innerHTML)>1){
@@ -121,25 +117,25 @@ function setSessionDuration(e){
 
 function playPause(){
   isTicking = !isTicking
+  let counter = parseInt(sec.innerHTML) === 0 ? 60 : parseInt(sec.innerHTML)
   if(isTicking){
     interval = setInterval(function(){
+      counter -= 5;
       if(parseInt(sec.innerHTML) === 0 && parseInt(min.innerHTML) !== 0){
-        console.log("param")
-        sec.innerHTML = 60
+        sec.innerHTML = 60;
+        counter = 60;
+        counter -= 5;
         min.innerHTML = parseInt(min.innerHTML) - 1
+        sec.innerHTML = counter;
         if(parseInt(min.innerHTML)<10){
           min.innerHTML = "0" + min.innerHTML
         }
       }
-      sec.innerHTML = parseInt(sec.innerHTML) - 10
-      if(parseInt(sec.innerHTML)<10){
-        sec.innerHTML = "0" + sec.innerHTML
-      }
-      if(parseInt(sec.innerHTML) === 0 && parseInt(min.innerHTML) === 0){
+      else if(parseInt(min.innerHTML) === 0 && counter===0){
         sec.innerHTML = "00"
         min.innerHTML = "00"
       }
-      if(parseInt(sec.innerHTML) < 0 && parseInt(min.innerHTML) === 0){
+      else if(counter < 0 && parseInt(min.innerHTML) === 0){
         isBreak = !isBreak
         isSession = !isSession
         if(isBreak){
@@ -151,34 +147,31 @@ function playPause(){
           parseInt(sessionNum.innerHTML) < 10 ? min.innerHTML = "0" + sessionNum.innerHTML : min.innerHTML = sessionNum.innerHTML 
         }
       }
-      
+      else{
+        sec.innerHTML = counter;
+      }
+      if(parseInt(sec.innerHTML)<10 && counter > 0){
+        sec.innerHTML = "0" + counter
+      }
     }, 1000);
   }
   else{
-      clearInterval(interval)
+    clearInterval(interval)
   }
 }
 
 function restart(){
   if(isTicking){
     isTicking = !isTicking
-    isSession = true
-    isBreak = false
-    clearInterval(interval)
-    sessionNum.innerHTML= "25"
-    breakNum.innerHTML = "5"
-    min.innerHTML = "25"
-    sec.innerHTML = "00"
   }
-  else{
-    isSession = true
-    isBreak = false
-    clearInterval(interval)
-    sessionNum.innerHTML= "25"
-    breakNum.innerHTML = "5"
-    min.innerHTML = "25"
-    sec.innerHTML = "00"
-  }
+  isSession = true
+  isBreak = false
+  clearInterval(interval)
+  sessionNum.innerHTML= "25"
+  breakNum.innerHTML = "5"
+  min.innerHTML = "25"
+  sec.innerHTML = "00"
+  sessionOrBreakTitle.innerHTML = "Session"
 }
 
 breakDown.addEventListener('click', setBreakDuration)
