@@ -8,7 +8,7 @@
 
 
 #main{
-  margin:200px;
+  margin: 20vh 17.5vw;
   text-align: center;
 }
 h1 {
@@ -16,14 +16,13 @@ h1 {
   font-size: 35px;
 }
 #settings{
-  width: 700px;
-  margin: 0 350px 0 300px;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   /* margin-bottom: 30px; */
 }
 #break{
-  margin-right: 45px;
+  margin: 0 30px;
   font-family: var(--font-for-texts);
 }
 #session{
