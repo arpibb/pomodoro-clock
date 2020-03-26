@@ -13,6 +13,7 @@ const playPauseButton = document.getElementById('start_stop')
 const restartButton = document.getElementById('reset')
 
 const sessionOrBreakTitle = document.querySelector('#timer-label')
+const audio = document.querySelector("#beep")
 
 let isTicking = false
 let isBreak = false
@@ -134,6 +135,7 @@ function playPause(){
       else if(parseInt(min.innerHTML) === 0 && counter===0){
         sec.innerHTML = "00"
         min.innerHTML = "00"
+        audio.play();
       }
       else if(counter < 0 && parseInt(min.innerHTML) === 0){
         isBreak = !isBreak
@@ -172,6 +174,8 @@ function restart(){
   min.innerHTML = "25"
   sec.innerHTML = "00"
   sessionOrBreakTitle.innerHTML = "Session"
+  audio.pause();
+  audio.currentTime = 0;
 }
 
 breakDown.addEventListener('click', setBreakDuration)
